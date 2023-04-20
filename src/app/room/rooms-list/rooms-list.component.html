@@ -1,0 +1,30 @@
+<div class="container-flude">
+    <table class="table text-center">
+        <tr class="">
+            <th>Room-no</th>
+            <th>Room-Type</th>
+            <th>Amenities</th>
+            <th>Photos</th>
+            <th>Room-Price</th>
+            <th>Room-Checkin</th>
+            <th>Room-Checkout</th>
+            <th>Ratings</th>
+            <th>Select</th>
+        </tr>
+        <tr class="" [ngClass]="e? 'even':'odd'" *ngFor="let room of rooms; let e=even; let o=odd; let i=index">
+            <td [innerText]="room.roomNumber "></td>
+            <td [innerText]="room.roomtype | uppercase"></td>
+            <td [innerText]="room.amenities | uppercase"></td>
+            <td [innerText]="room.photos"></td>
+            <td [innerText]="room.price |currency : 'INR'"></td>
+            <td [innerText]="room.checkinTime | date"></td>
+            <td [innerText]="room.checkoutTime | date:'dd/mm/yyyy'"></td>
+            <td [innerText]="room.rating"></td>
+            
+            <td><button class="btn" (click)="selectRoom(room)">select</button></td>
+            <td><button class="btn" (click)="deleteRoom(room)">delete</button></td>
+
+        </tr>
+    </table>
+
+</div>
