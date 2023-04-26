@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Inject, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { RoomComponent } from './room/room.component';
 import { localstoragetoken, sessionstoragetoken } from './localstorage.token';
+import { InitService } from './init.service';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +18,13 @@ export class AppComponent implements OnInit {
   //   componentRef.instance.pagename = "Hotel Rajmahel";
   // }
   
-  constructor(@Inject(localstoragetoken) private localstorage:any, @Inject(sessionstoragetoken) private sessionstorage:any){}
+  constructor(@Inject(localstoragetoken) private localstorage: any, @Inject(sessionstoragetoken) private sessionstorage: any,
+    private initservices: InitService) { 
+    console.log(initservices.config);
+  }
 
+  test: string = "from app component";
+  
   ngOnInit(): void {
     this.localstorage.setItem('name', 'Hilton hotel');
     // this.sessionstorage.setItem('name', 'ashish');

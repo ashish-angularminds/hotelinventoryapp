@@ -21,7 +21,7 @@
             <td [innerText]="room.checkoutTime | date:'dd/mm/yyyy'"></td>
             <td [innerText]="room.rating"></td>
             
-            <td><button class="btn" (click)="selectRoom(room)">select</button></td>
+            <td><button class="btn" [routerLink]="['/rooms',room.roomNumber]">Select</button></td>
             <td><button class="btn" (click)="deleteRoom(room)">delete</button></td>
 
         </tr>

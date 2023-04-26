@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, DoCheck, OnInit, QueryList, Self, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, OnDestroy, OnInit, QueryList, Self, ViewChild, ViewChildren } from '@angular/core';
 import { room } from './room';
 import { JsonPipe } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { AppComponent } from '../app.component';
 import { RoomsService } from './services/rooms.service';
 import { HttpEventType } from '@angular/common/http';
+import { Subject, Subscriber, Subscription, catchError, map } from 'rxjs';
 
 @Component({
   selector: 'app-room',
@@ -12,11 +13,11 @@ import { HttpEventType } from '@angular/common/http';
   styleUrls: ['./room.component.scss'],
   providers: [RoomsService],
 })
-export class RoomComponent implements OnInit, DoCheck, AfterViewInit {
+export class RoomComponent implements OnInit, DoCheck, AfterViewInit, OnDestroy {
   ngDoCheck(): void {
     console.log("Changes are made/ Event is called");
   }
- 
+
 
   showtext = false;
   btn = "show";
@@ -27,18 +28,36 @@ export class RoomComponent implements OnInit, DoCheck, AfterViewInit {
   pagename = "Room";
 
   roomList!: room[];
-  
-  constructor(private roomsservices: RoomsService){}
 
-  totalbytes: number =0 ;
+  constructor(private roomsservices: RoomsService) { }
+
+
+  err$ = new Subject<string>();
+
+  errmsg$ = this.err$.asObservable();
+
+  rooms$ = this.roomsservices.getRooms$.pipe(
+    catchError((err) => {
+    console.log("This is the error:"+err);
+    this.err$.next(err.message);
+    return ([]);
+  }));
+
+  // rooms$ = this.roomsservices.getRooms();
+
+  roomleg$ = this.roomsservices.getRooms$.pipe(map((data) => data.length));
+
+  Subscription !: Subscription;
+
+  totalbytes: number = 0;
   ngOnInit(): void {
-    this.roomsservices.getRooms().subscribe(rooms => {
+    this.Subscription = this.roomsservices.getRooms$.subscribe(rooms => {
       this.roomList = rooms;
     });
-    
+
     this.roomsservices.loadPhotos().subscribe((event) => {
       switch (event.type) {
-        case HttpEventType.Sent:{
+        case HttpEventType.Sent: {
           console.log('Request has been made');
           break;
         }
@@ -54,14 +73,14 @@ export class RoomComponent implements OnInit, DoCheck, AfterViewInit {
           console.log(event.body);
           break;
         }
-        
+
       }
     });
-    
+
   }
-  
+
   room!: room;
-  selectRoom(rooms:room) {
+  selectRoom(rooms: room) {
     this.room = rooms;
   }
 
@@ -82,7 +101,7 @@ export class RoomComponent implements OnInit, DoCheck, AfterViewInit {
     // this.roomsservices.getRooms().subscribe(rooms => console.log(rooms));
 
     this.roomsservices.addRoom(r).subscribe((data) => {
-      this.roomList= data;
+      this.roomList = data;
     });
   }
 
@@ -103,17 +122,17 @@ export class RoomComponent implements OnInit, DoCheck, AfterViewInit {
     })
   }
 
-  deleteRoom(room:room) {
+  deleteRoom(room: room) {
     this.roomsservices.deleteRoom(room).subscribe((data) => {
       this.roomList = data;
     })
   }
 
   @ViewChild(HeaderComponent) headerComponent!: HeaderComponent;
-  
+
   @ViewChildren(HeaderComponent) headerComponents!: QueryList<HeaderComponent>;
 
-  
+
   ngAfterViewInit(): void {
     this.headerComponent.title = "title passed from room comp to header comp";
 
@@ -121,6 +140,8 @@ export class RoomComponent implements OnInit, DoCheck, AfterViewInit {
 
   }
 
-
+  ngOnDestroy(): void {
+    this.Subscription.unsubscribe();
+  }
 
 }

@@ -4,14 +4,20 @@ import {} from '../../../environments/environment'
 import { environment } from 'src/environments/environment.development';
 import { APP_CONFIG, APP_SERVICE_CONFIG } from 'src/app/AppConfig/appconfig.service';
 import { AppConfig } from 'src/app/AppConfig/appconfig.interface';
-import {HttpClient, HttpRequest} from '@angular/common/http'
+import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http'
+import { shareReplay } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class RoomsService {
 
   roomList: room[] = [];
+  headers = new HttpHeaders({ 'token':'123498346d'});
   
+  getRooms$ = this.http.get<room[]>('/api/rooms', {
+    // headers: this.headers,
+  }).pipe(shareReplay(1));
+
   constructor(@Inject(APP_SERVICE_CONFIG) private config:AppConfig, private http: HttpClient){ 
     // console.log(environment.apiEndpoint);
     console.log(config.apiEndpoint);

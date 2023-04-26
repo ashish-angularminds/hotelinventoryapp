@@ -2,7 +2,12 @@
 <app-header></app-header>
 <app-header></app-header>
 
+<!-- <p>all room data: </p> -->
+<!-- <h3>{{rooms$ | async | json}}</h3> -->
+<p>No. of rooms</p>
+<h3>{{roomleg$ | async}}</h3>
 
+<br><br><p>{{errmsg$ | async}}</p><br><br>
 <div [ngSwitch]="showtext">
     <div [ngStyle]="{'background':'#123'}" *ngSwitchCase="false">
         Nothing to show
@@ -23,8 +28,8 @@
 </div>
 
 <button class="btn btn-dange" (click)="showtext=showtext? false:true">Show List</button>
-<div *ngIf="showtext">
-    <app-rooms-list [rooms]="roomList" [btn]="btn" (deletedRoom)="deleteRoom($event)" (selectedRoom)="selectRoom($event)"></app-rooms-list>
+<div *ngIf="rooms$ |async as rooms">
+    <app-rooms-list [rooms]="rooms" [btn]="btn" (deletedRoom)="deleteRoom($event)" (selectedRoom)="selectRoom($event)"></app-rooms-list>
     <button class="btn btn-dark m-1" (click)="addroom()">Add row</button>
     <button class="btn btn-dark m-1" (click)="editRoom()">Edit row</button>
 </div>

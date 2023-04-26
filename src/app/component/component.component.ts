@@ -12,6 +12,7 @@ export class ComponentComponent implements AfterContentInit {
 
   // constructor(@Host() private roomservice:RoomsService) { }
 
+  test: string = "test from component";
   
   @ContentChild(EmployyeComponent) emp!: EmployyeComponent;
   ngAfterContentInit(): void {
