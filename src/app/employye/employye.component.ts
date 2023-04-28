@@ -7,11 +7,11 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./employye.component.scss']
 })
 export class EmployyeComponent implements OnInit {
-  empName = "John"
+  // empName = "John"
 
-  @Input() test1?:string;
+  // @Input() test1?:string;
 
   ngOnInit(): void {
-    console.log(this.test1);
+    // console.log(this.test1);
   }
 }

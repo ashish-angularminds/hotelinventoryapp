@@ -3,6 +3,7 @@ import { room } from '../room';
 import { JsonPipe } from '@angular/common';
 import { RoomsService } from '../services/rooms.service';
 import { Observable } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-rooms-add',
@@ -24,8 +25,11 @@ export class RoomsAddComponent {
   constructor(private roomservice:RoomsService){}
 
   message:string ='';
-  addRoom() {
+  addRoom(roomForm:NgForm) {
     // console.log(this.room)
-    this.roomservice.addRoom(this.room).subscribe((data)=> this.message="Room added successfully.");
+    this.roomservice.addRoom(this.room).subscribe((data) => {
+      this.message = "Room added successfully."
+      roomForm.reset();
+    });
   }
 }

@@ -1,0 +1,22 @@
+<div class="container">
+    <br>
+    <form #roomsForm="ngForm" class="card px-4 py-4" (ngSubmit)="login()">
+        <div class="mb-3">
+            <input appHover type="email" name="email" class="form-control"
+                placeholder="Email"
+                [(ngModel)]="user.email"
+                required>
+            <!-- <small class="alert alert-danger p-1 mt-2" *ngIf="roomtype.errors?.['minlength']">{{roomtype.errors?.['minlength']?'Min length should be greater than 4':''}}</small> -->
+        </div>
+        <div class="mb-3">
+            <input type="password" name="password" id="" class="form-control"
+                [(ngModel)]="user.password"
+                placeholder="Password"
+                required>
+        </div>
+        <div class="mx-auto">
+            <button [disabled]="roomsForm.invalid" class="btn btn-dark"
+                type="submit">Login</button>
+        </div>
+    </form>
+</div>

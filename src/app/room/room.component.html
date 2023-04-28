@@ -24,14 +24,17 @@
 <button class="btn btn-dark" (click)="show()" [innerText]="btn"></button>
 
 <div *ngIf="room">
-<p class="bg-dark">{{room | json}}</p>
+    <p class="bg-dark">{{room | json}}</p>
 </div>
 
 <button class="btn btn-dange" (click)="showtext=showtext? false:true">Show List</button>
 <div *ngIf="rooms$ |async as rooms">
-    <app-rooms-list [rooms]="rooms" [btn]="btn" (deletedRoom)="deleteRoom($event)" (selectedRoom)="selectRoom($event)"></app-rooms-list>
+    <app-rooms-list [rooms]="rooms" [btn]="btn"
+        (deletedRoom)="deleteRoom($event)" (selectedRoom)="selectRoom($event)"></app-rooms-list>
     <button class="btn btn-dark m-1" (click)="addroom()">Add row</button>
     <button class="btn btn-dark m-1" (click)="editRoom()">Edit row</button>
 </div>
 
 <h1>{{totalbytes}}</h1>
+
+<router-outlet></router-outlet>

@@ -1,61 +1,66 @@
 <div class="container-flude center-all">
 
     <div style="width: 100%;">{{room | json }}</div>
-    <div>{{message}}</div>
-
+    <div class="alert alert-success" *ngIf="message!==''">{{message}}</div>
     <div class="card-wrapper m-4">
-        <form class="card px-4 py-4" (ngSubmit)="addRoom()">
+        <form #roomsForm="ngForm" class="card px-4 py-4" (ngSubmit)="addRoom(roomsForm)">
             <div class="mb-3">
                 <label for="" class="form-label">Room Type</label>
-                <input type="text" name="roomtype" id="" class="form-control"
+                <input #roomtype="ngModel" type="text" name="roomtype" id="" class="form-control"
                     placeholder=""
+                    minlength="4"
+                    maxlength="10"
                     [(ngModel)]="room.roomtype"
-                    aria-describedby="helpId">
+                    required>
+                    <small class="alert alert-danger p-1 mt-2" *ngIf="roomtype.errors?.['minlength']">{{roomtype.errors?.['minlength']?'Min length should be greater than 4':''}}</small>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Amenities</label>
                 <input type="text" name="amenities" id="" class="form-control"
                     [(ngModel)]="room.amenities"
                     placeholder=""
-                    aria-describedby="helpId">
+                    required>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Price</label>
                 <input type="number" name="price" id="" class="form-control"
                     [(ngModel)]="room.price"
                     placeholder=""
-                    aria-describedby="helpId">
+                    required>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Photos</label>
                 <input type="file" name="photos" id="" class="form-control"
                     [(ngModel)]="room.photos"
                     placeholder=""
-                    aria-describedby="helpId">
+                    required>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Checkin Time</label>
                 <input type="datetime-local" name="checkintime" id="" class="form-control"
                     [(ngModel)]="room.checkinTime"
                     placeholder=""
-                    aria-describedby="helpId">
+                    required>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Checkout Time</label>
                 <input type="datetime-local" name="checkouttime" id="" class="form-control"
                     [(ngModel)]="room.checkoutTime"
                     placeholder=""
-                    aria-describedby="helpId">
+                    required>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Rating</label>
-                <input type="number" name="rating" id="" class="form-control"
+                <input #rating="ngModel" type="number" name="rating" id="" class="form-control"
                     [(ngModel)]="room.rating"
                     placeholder=""
-                    aria-describedby="helpId">
+                    min="1"
+                    max="5"
+                    required>
+                    <small class="alert alert-danger p-1 mt-2" *ngIf="rating.errors?.['max'] || rating.errors?.['min']">{{rating.errors?.['min']?'Value should be greater than 0':'Value should be less than or equle to 5'}}</small>
             </div>
             <div class="mx-auto">
-                <button class="btn btn-dark" type="submit">Submit</button>
+                <button [disabled]="roomsForm.invalid" class="btn btn-dark" type="submit">Submit</button>
             </div>
         </form>
     </div>
