@@ -6,6 +6,7 @@ import { AppComponent } from '../app.component';
 import { RoomsService } from './services/rooms.service';
 import { HttpEventType } from '@angular/common/http';
 import { Subject, Subscriber, Subscription, catchError, map } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-room',
@@ -38,10 +39,10 @@ export class RoomComponent implements OnInit, DoCheck, AfterViewInit, OnDestroy 
 
   rooms$ = this.roomsservices.getRooms$.pipe(
     catchError((err) => {
-    console.log("This is the error:"+err);
-    this.err$.next(err.message);
-    return ([]);
-  }));
+      console.log("This is the error:" + err);
+      this.err$.next(err.message);
+      return ([]);
+    }));
 
   // rooms$ = this.roomsservices.getRooms();
 
@@ -50,6 +51,9 @@ export class RoomComponent implements OnInit, DoCheck, AfterViewInit, OnDestroy 
   Subscription !: Subscription;
 
   totalbytes: number = 0;
+
+  pricefilter = new FormControl();
+
   ngOnInit(): void {
     this.Subscription = this.roomsservices.getRooms$.subscribe(rooms => {
       this.roomList = rooms;
@@ -134,10 +138,12 @@ export class RoomComponent implements OnInit, DoCheck, AfterViewInit, OnDestroy 
 
 
   ngAfterViewInit(): void {
+
+    this.headerComponents.forEach((data) => data.title = "viewchildern");
+
+    this.headerComponents.get(1)!.title = 'test works';
+
     this.headerComponent.title = "title passed from room comp to header comp";
-
-    this.headerComponents.last.title = "viewchildern";
-
   }
 
   ngOnDestroy(): void {

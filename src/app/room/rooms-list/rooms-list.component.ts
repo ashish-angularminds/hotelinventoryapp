@@ -5,9 +5,9 @@ import { room } from '../room';
   selector: 'app-rooms-list',
   templateUrl: './rooms-list.component.html',
   styleUrls: ['./rooms-list.component.scss'],
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RoomsListComponent implements OnInit,OnChanges, OnDestroy {
+export class RoomsListComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() rooms: room[] = [];
 
@@ -17,12 +17,14 @@ export class RoomsListComponent implements OnInit,OnChanges, OnDestroy {
 
   @Output() deletedRoom = new EventEmitter<room>();
 
+  @Input() price!: number;
+
   constructor() { }
-  
+
   ngOnInit(): void { }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes); 
+    console.log(changes);
   }
 
   selectRoom(rooms: room) {
@@ -32,8 +34,8 @@ export class RoomsListComponent implements OnInit,OnChanges, OnDestroy {
   deleteRoom(rooms: room) {
     this.deletedRoom.emit(rooms);
   }
-  
+
   ngOnDestroy(): void {
-      console.log("room list is destroyed")
+    console.log("room list is destroyed")
   }
 }

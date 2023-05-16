@@ -3,16 +3,23 @@
     <div style="width: 100%;">{{room | json }}</div>
     <div class="alert alert-success" *ngIf="message!==''">{{message}}</div>
     <div class="card-wrapper m-4">
-        <form #roomsForm="ngForm" class="card px-4 py-4" (ngSubmit)="addRoom(roomsForm)">
+        <form #roomsForm="ngForm" class="card px-4 py-4"
+            (ngSubmit)="addRoom(roomsForm)">
             <div class="mb-3">
                 <label for="" class="form-label">Room Type</label>
-                <input #roomtype="ngModel" type="text" name="roomtype" id="" class="form-control"
+                <input #roomtype="ngModel" type="text" name="roomtype" id=""
+                    class="form-control"
                     placeholder=""
                     minlength="4"
                     maxlength="10"
                     [(ngModel)]="room.roomtype"
+                    [ngModelOptions]="{updateOn:'blur'}"
                     required>
-                    <small class="alert alert-danger p-1 mt-2" *ngIf="roomtype.errors?.['minlength']">{{roomtype.errors?.['minlength']?'Min length should be greater than 4':''}}</small>
+                <small class="alert alert-danger p-1 mt-2"
+                    *ngIf="roomtype.errors?.['minlength']">
+                    {{roomtype.errors?.['minlength']?'Min length should be
+                    greater than 4':''}}
+                </small>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Amenities</label>
@@ -37,30 +44,37 @@
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Checkin Time</label>
-                <input type="datetime-local" name="checkintime" id="" class="form-control"
+                <input type="datetime-local" name="checkintime" id=""
+                    class="form-control"
                     [(ngModel)]="room.checkinTime"
                     placeholder=""
                     required>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Checkout Time</label>
-                <input type="datetime-local" name="checkouttime" id="" class="form-control"
+                <input type="datetime-local" name="checkouttime" id=""
+                    class="form-control"
                     [(ngModel)]="room.checkoutTime"
                     placeholder=""
                     required>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Rating</label>
-                <input #rating="ngModel" type="number" name="rating" id="" class="form-control"
+                <input #rating="ngModel" type="number" name="rating" id=""
+                    class="form-control"
                     [(ngModel)]="room.rating"
                     placeholder=""
                     min="1"
                     max="5"
                     required>
-                    <small class="alert alert-danger p-1 mt-2" *ngIf="rating.errors?.['max'] || rating.errors?.['min']">{{rating.errors?.['min']?'Value should be greater than 0':'Value should be less than or equle to 5'}}</small>
+                <small class="alert alert-danger p-1 mt-2"
+                    *ngIf="rating.errors?.['max'] || rating.errors?.['min']">{{rating.errors?.['min']?'Value
+                    should be greater than 0':'Value should be less than or
+                    equle to 5'}}</small>
             </div>
             <div class="mx-auto">
-                <button [disabled]="roomsForm.invalid" class="btn btn-dark" type="submit">Submit</button>
+                <button [disabled]="roomsForm.invalid" class="btn btn-dark"
+                    type="submit">Submit</button>
             </div>
         </form>
     </div>

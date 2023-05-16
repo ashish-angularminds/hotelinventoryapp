@@ -2,6 +2,7 @@
 <app-header></app-header>
 <app-header></app-header>
 
+
 <!-- <p>all room data: </p> -->
 <!-- <h3>{{rooms$ | async | json}}</h3> -->
 <p>No. of rooms</p>
@@ -28,11 +29,16 @@
 </div>
 
 <button class="btn btn-dange" (click)="showtext=showtext? false:true">Show List</button>
+<div class="container bg-dark rounded">
+    {{pricefilter | json}}
+    <input type="number" class="form-control" [formControl]="pricefilter">
+</div>
+
 <div *ngIf="rooms$ |async as rooms">
-    <app-rooms-list [rooms]="rooms" [btn]="btn"
+    <app-rooms-list [rooms]="rooms" [price]="pricefilter.value" [btn]="btn"
         (deletedRoom)="deleteRoom($event)" (selectedRoom)="selectRoom($event)"></app-rooms-list>
-    <button class="btn btn-dark m-1" (click)="addroom()">Add row</button>
-    <button class="btn btn-dark m-1" (click)="editRoom()">Edit row</button>
+    <!-- <button class="btn btn-dark m-1" (click)="addroom()">Add row</button>
+    <button class="btn btn-dark m-1" (click)="editRoom()">Edit row</button> -->
 </div>
 
 <h1>{{totalbytes}}</h1>

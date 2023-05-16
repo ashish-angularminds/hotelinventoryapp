@@ -1,0 +1,52 @@
+.wrapper-d {
+    height: 50px;
+    width: max-content;
+    background-color: rgb(228, 225, 225);
+    border-radius: 40px;
+    padding: 0 !important;
+}
+
+.bt {
+    border: none;
+    background: transparent;
+    padding: 7px 14px;
+    width: 70px;
+    z-index: 2;
+}
+
+span {
+    width: 70px;
+    height: 100%;
+    background-color: #fff;
+    border: 1px solid rgb(174, 174, 174);
+    border-radius: 40px;
+    position: absolute;
+    left: 0%;
+    z-index: 0;
+    transition: all .5s;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+@keyframes showp {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.anim {
+    animation: showp 4s;
+    // transition: all 1s;
+}

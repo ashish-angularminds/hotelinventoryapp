@@ -25,6 +25,7 @@ import { HoverDirective } from './hover.directive';
 import { RoomModule } from './room/room.module';
 import { HeaderModule } from './header/header.module';
 import { EmployeModule } from './employye/employe.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 function initFactory(initservice: InitService) {
   return () => initservice.init();
@@ -36,11 +37,10 @@ function initFactory(initservice: InitService) {
     ComponentComponent,
     NavComponent,
     LoginComponent,
-    HoverDirective
+    HoverDirective,
   ],
   imports: [
     BrowserModule,
-    RoomModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -51,7 +51,8 @@ function initFactory(initservice: InitService) {
     MatIconModule,
     MatListModule,
     FormsModule,
-    HeaderModule
+    HeaderModule,
+    MatSnackBarModule
   ],
   providers: [
     {

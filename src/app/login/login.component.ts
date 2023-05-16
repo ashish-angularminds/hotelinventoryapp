@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -8,17 +9,18 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  constructor(private route: Router) { }
+  constructor(private route: Router, private loginservice: LoginService) { }
 
-  test: string='';
+  test: string = '';
   user = {
     email: '',
     password: ''
   }
 
   login() {
-    if (this.user.email == "admin@123.in" && this.user.password == '123') {
-      this.route.navigate(['/rooms', '']);
+
+    if (this.loginservice.login(this.user.email, this.user.password)) {
+      this.route.navigate(['/rooms']);
     }
   }
 
