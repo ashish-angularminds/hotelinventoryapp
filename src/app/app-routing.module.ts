@@ -19,11 +19,12 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
-    path: 'booking/:roomid',
+    path: 'booking',
     loadChildren: () => import('./booking/booking.module').then(m => m.BookingModule),
     // canLoad: [LoginGuard],
     // canActivate: [LoginGuard]
   },
+  { path: 'comments', loadChildren: () => import('./comments/comments.module').then(m => m.CommentsModule) },
   {
     path: '**',
     loadChildren: () => import('./notfound/notfound.module').then((m) => m.NotfoundModule)
